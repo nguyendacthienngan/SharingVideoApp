@@ -1,3 +1,6 @@
+
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_trimmer/video_trimmer.dart';
@@ -32,7 +35,6 @@ class _TrimmerViewState extends State<TrimmerView> {
         
       });
     });
-
     return _value;
   }
 
@@ -65,6 +67,8 @@ class _TrimmerViewState extends State<TrimmerView> {
                       print('OUTPUT PATH: $outputPath');
                       final snackBar = SnackBar(content: Text('Video Saved successfully'));
                       Scaffold.of(context).showSnackBar(snackBar);
+                      File output= File(outputPath);
+                      Navigator.of(context).pop(output);
                     });
                   },
                   child: Text("SAVE"),
