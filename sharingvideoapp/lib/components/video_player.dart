@@ -21,10 +21,13 @@ class _VideoPlayerCustom extends State<VideoPlayerCustom> {
   Future<void> _initializeVideoPlayerFuture;
 
   @override
-  void initState(){
-    if (widget.source!= null)
-    _controller = VideoPlayerController.network(widget.source);//'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4'
-    else _controller = VideoPlayerController.file(widget.file);
+  void initState() {
+    if (widget.source!= null) {
+      _controller =  VideoPlayerController.network(widget.source);
+    } else{
+      _controller =   VideoPlayerController.file(widget.file);
+
+    }
     _initializeVideoPlayerFuture = _controller.initialize();
     _controller.setLooping(true);
     super.initState();
@@ -38,18 +41,21 @@ class _VideoPlayerCustom extends State<VideoPlayerCustom> {
 
   @override
   Widget build(BuildContext context) {
+    //print(widget.file.path+ " aaaa");
     return Container(
       alignment: Alignment.center,
       child: Stack(
+        alignment: Alignment.center,
         children: [
           FutureBuilder(
             future: _initializeVideoPlayerFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                );
+                return Center(
+                  child: AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: VideoPlayer(_controller),
+                  ),);
               }
               else {
                 return Center(child: CircularProgressIndicator(),
@@ -58,29 +64,28 @@ class _VideoPlayerCustom extends State<VideoPlayerCustom> {
             },
           ),
           FloatingActionButton(
-              backgroundColor: Colors.transparent,
-              elevation: 0.0,
-              onPressed: () {
-                // Wrap the play or pause in a call to `setState`. This ensures the
-                // correct icon is shown.
-                setState(() {
-                  // If the video is playing, pause it.
-                  if (_controller.value.isPlaying) {
-                    _controller.pause();
-                  } else {
-                    // If the video is paused, play it.
-                    _controller.play();
-                  }
-                });
-              },
-              // Display the correct icon depending on the state of the player.
-              child: _controller.value.isPlaying ? Icon(
-                Icons.pause, color: Colors.transparent,) : Icon(
-                  Icons.play_arrow)
-          ),
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+                onPressed: () {
+                  // Wrap the play or pause in a call to `setState`. This ensures the
+                  // correct icon is shown.
+                  setState(() {
+                    // If the video is playing, pause it.
+                    if (_controller.value.isPlaying) {
+                      _controller.pause();
+                    } else {
+                      // If the video is paused, play it.
+                      _controller.play();
+                    }
+                  });
+                },
+                // Display the correct icon depending on the state of the player.
+                child: _controller.value.isPlaying ? Icon(
+                  Icons.pause, color: Colors.transparent, size: 50,) : Icon(
+                  Icons.play_arrow, size: 50,)
+            ),
         ],
       ),
     );
   }
-
 }

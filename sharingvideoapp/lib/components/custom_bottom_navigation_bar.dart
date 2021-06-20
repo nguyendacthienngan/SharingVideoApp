@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sharingvideoapp/constant.dart';
 import 'package:sharingvideoapp/pages/addvideo/addvideo_page.dart';
+import 'package:sharingvideoapp/pages/discover/discover_page.dart';
 import 'package:sharingvideoapp/pages/home/home_page.dart';
 class CustomBottomNavBar extends StatelessWidget
 {
@@ -51,7 +52,7 @@ class CustomBottomNavBar extends StatelessWidget
                   {
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
+                      MaterialPageRoute(builder: (context) => DiscoverPage()),
                           (Route<dynamic> route) => false,),
                   }
               },
@@ -65,10 +66,9 @@ class CustomBottomNavBar extends StatelessWidget
               onPressed: () => {
                 if (selectedMenu != MenuState.add)
                   {
-                    Navigator.pushAndRemoveUntil(
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AddVideoPage()),
-                          (Route<dynamic> route) => false,),
+                      MaterialPageRoute(builder: (context) => AddVideoPage())),
                   }
               },
             ),
