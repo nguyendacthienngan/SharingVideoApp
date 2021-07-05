@@ -5,6 +5,9 @@ import 'package:sharingvideoapp/pages/addvideo/addvideo_body.dart';
 import 'package:sharingvideoapp/pages/addvideo/addvideo_page.dart';
 import 'package:sharingvideoapp/pages/discover/discover_page.dart';
 import 'package:sharingvideoapp/pages/home/home_page.dart';
+import 'package:sharingvideoapp/screen/discover_screen.dart';
+
+
 //
 // Future<void> main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
@@ -52,6 +55,7 @@ class MyApp extends StatelessWidget {
           '/home': (BuildContext context) => new HomePage(),
           '/add':(BuildContext context) => new AddVideoPage(),
           '/discover':(BuildContext context)=> new DiscoverPage(),
+          'search':(BuildContext context)=> new Search(),
         }
     );
   }
