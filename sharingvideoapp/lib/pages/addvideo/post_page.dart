@@ -9,7 +9,7 @@ import 'package:sharingvideoapp/components/switch_button.dart';
 import 'package:sharingvideoapp/pages/home/home_page.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
-
+import 'package:sharingvideoapp/screen/home_screen.dart';
 
 class PostPage extends StatelessWidget{
   PostPage({Key key,this.image}):super (key: key);
@@ -166,7 +166,7 @@ class PostPage extends StatelessWidget{
                             onPressed: () {
                               Navigator.pushAndRemoveUntil(
                                 context,
-                                MaterialPageRoute(builder: (context) => HomePage()),
+                                MaterialPageRoute(builder: (context) => HomeScreen()),
                                     (Route<dynamic> route) => false);
                             },
                             child: Text("Next",

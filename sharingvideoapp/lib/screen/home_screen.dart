@@ -78,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     //  }
                   },
                   child: Container(
+
                     margin: EdgeInsets.only(top: 10),
                     width: 50,
                     height: sizingInformation.localWidgetSize.height * 0.07,

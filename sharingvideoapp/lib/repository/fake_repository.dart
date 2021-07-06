@@ -35,8 +35,13 @@ class FakeRepository{
   ];
   static List<String> dataList=["60s","15s","Templates"];
   static List<String> imageData=[
-    "https://static.vecteezy.com/system/resources/previews/000/523/046/non_2x/vector-mobile-app-development-concept.jpg",
-    "https://www.yourteaminindia.com/blog/wp-content/uploads/2020/06/Online-Exclusive-3.jpg",
+    //"https://static.vecteezy.com/system/resources/previews/000/523/046/non_2x/vector-mobile-app-development-concept.jpg",
+    //"https://www.yourteaminindia.com/blog/wp-content/uploads/2020/06/Online-Exclusive-3.jpg",
+    "https://img.freepik.com/free-vector/tiktok-social-media-design_145865-116.jpg?size=626&ext=jpg",
+    "https://www.kapwing.com/resources/content/images/size/w600/2021/01/voiceover-on-tiktok.png",
+    "https://www.criticalmention.com/wp-content/uploads/tiktok_banner.png"
+
+
   ];
   static List<String> assetData=[
     "assets/profile1.jpg",
