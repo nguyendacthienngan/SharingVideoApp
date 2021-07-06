@@ -13,6 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import 'package:sharingvideoapp/pages/addvideo/addvideo_page.dart';
+import 'package:sharingvideoapp/screen/pages/trending_page.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int _pageController=0;
 
-  List<Widget> _pages=[HomePage(),DiscoverPage(),InboxPage(),MePage()];
+  List<Widget> _pages=[HomePage(),DiscoverPage(),InboxPage(),MePage(),TrendingPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 InkWell(
                   onTap: () {
                     setState(() {
-                      _pageController=3;
+                      _pageController=4;
                     });
                   },
                   child: _navBarItem(

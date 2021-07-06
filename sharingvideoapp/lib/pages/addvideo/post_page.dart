@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:sharingvideoapp/components/dropdown_button.dart';
 import 'package:sharingvideoapp/components/switch_button.dart';
 import 'package:sharingvideoapp/pages/home/home_page.dart';
+import 'package:sharingvideoapp/screen/home_screen.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 import 'package:sharingvideoapp/screen/home_screen.dart';
@@ -143,7 +144,7 @@ class PostPage extends StatelessWidget{
                                       onPressed: () {
                                         Navigator.pushAndRemoveUntil(
                                           context,
-                                          MaterialPageRoute(builder: (context) => HomePage()),
+                                          MaterialPageRoute(builder: (context) => HomeScreen()),
                                               (Route<dynamic> route) => false);
                                         },
                                       child: Text('DISCARD'),
