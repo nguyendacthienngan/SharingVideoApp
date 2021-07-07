@@ -6,6 +6,7 @@ import 'package:sharingvideoapp/pages/addvideo/addvideo_page.dart';
 import 'package:sharingvideoapp/pages/discover/discover_page.dart';
 import 'package:sharingvideoapp/pages/home/home_page.dart';
 import 'package:sharingvideoapp/screen/discover_screen.dart';
+import 'package:sharingvideoapp/screen/pages/trending_page.dart';
 
 
 //
@@ -55,7 +56,8 @@ class MyApp extends StatelessWidget {
           '/home': (BuildContext context) => new HomePage(),
           '/add':(BuildContext context) => new AddVideoPage(),
           '/discover':(BuildContext context)=> new DiscoverPage(),
-          'search':(BuildContext context)=> new Search(),
+          '/search':(BuildContext context)=> new Search(),
+          '/trending_page':(BuildContext context)=> new TrendingPage(),
         }
     );
   }

@@ -1,5 +1,6 @@
 //import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
+
 //import 'EachComment.dart';
 import 'package:sharingvideoapp/screen/pages/discover_page.dart';
 
@@ -11,6 +12,7 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   //var ishit = false;
   final CommentController = TextEditingController();
+  FocusNode _focus = FocusNode();
 
   final recentcities = [
     "thanh_nguyen",
@@ -42,6 +44,26 @@ class _SearchState extends State<Search> {
 
   String textInTextField = '';
 
+  // Widget buildSuggestions(BuildContext context) {
+  //   // TODO: implement buildSuggestions
+  //   //show when some one searches fỏr some one
+  //   //throw UnimplementedError();
+  //   final suggestionList = textInTextField.isEmpty
+  //       ? recentcities
+  //       : cities.where((p) => p.startsWith(textInTextField)).toList();
+  //
+  //   return ListView.builder(
+  //     itemBuilder: (context, index) => ListTile(
+  //       onTap: () {
+  //         //showResults(context);
+  //       },
+  //       leading: Icon(Icons.access_time_rounded),
+  //       title: Text(suggestionList[index]),
+  //     ),
+  //     itemCount: suggestionList.length,
+  //   );
+  // }
+
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
     //show when some one searches fỏr some one
@@ -53,7 +75,15 @@ class _SearchState extends State<Search> {
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
         onTap: () {
-          //showResults(context);
+          ishit = false;
+          print('heeeeeeeeeeeeeee');
+          print(ishit);
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => Search(),
+          //   ),
+          // );
         },
         leading: Icon(Icons.access_time_rounded),
         title: Text(suggestionList[index]),
@@ -63,13 +93,28 @@ class _SearchState extends State<Search> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _focus.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange() {
+    // debugPrint("Focus: "+_focus.hasFocus.toString());
+    if (_focus.hasFocus)
+      setState(() {
+        ishit = true;
+      });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          automaticallyImplyLeading: false, //  không có nút back mặc định
+          automaticallyImplyLeading: false,
+          //  không có nút back mặc định
           //backgroundColor: Colors.white70,
 
           title: Row(
@@ -90,12 +135,13 @@ class _SearchState extends State<Search> {
                           textInTextField = CommentController.text;
                         });
                       },
+                      focusNode: _focus,
                       controller: CommentController,
                       //suggestions: cities,
                       decoration: InputDecoration(
                         hintText: "Search",
                         hintStyle: TextStyle(
-                          color: Colors.black,
+                          color: Colors.grey,
                           fontSize: 14,
                         ),
                         border: InputBorder.none,
@@ -105,10 +151,10 @@ class _SearchState extends State<Search> {
                             color: Colors.black,
                           ),
                           onPressed: () {
-                            setState(() {
-                              ishit = !ishit;
-                              //print('hiiiiiiiiiiii');
-                            });
+                            // setState(() {
+                            //   ishit = !ishit;
+                            //   //print('hiiiiiiiiiiii');
+                            // });
                           },
                         ),
                       ),
@@ -116,11 +162,14 @@ class _SearchState extends State<Search> {
                   ),
                 ),
               ),
-              SizedBox(width: 5,),
+              SizedBox(
+                width: 5,
+              ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                   FocusManager.instance.primaryFocus?.unfocus();
+                  ishit = false;
                 },
                 child: Text(
                   'Cancel',
@@ -165,10 +214,10 @@ class _SearchState extends State<Search> {
 
           bottom: ishit == false
               ? TabBar(
-            //indicatorColor: Colors.white,// mau dang chon tap nao
-            indicatorColor: Colors.black12,
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey,
+                  //indicatorColor: Colors.white,// mau dang chon tap nao
+                  indicatorColor: Colors.black12,
+                  labelColor: Colors.black,
+                  unselectedLabelColor: Colors.grey,
 
                   indicatorWeight: 2,
                   tabs: [
@@ -211,8 +260,8 @@ class _SearchState extends State<Search> {
 
   Widget buildPage(String text) => Container(
         padding: EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
+          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               padding: EdgeInsets.symmetric(horizontal: 15),
@@ -261,33 +310,59 @@ class _SearchState extends State<Search> {
                 ),
               ),
             ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  childAspectRatio: 4 / 6,
-                  children: [
-                    buildPictureCard(
-                        'https://images.unsplash.com/photo-1541397162856-74cedf47619c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGRhd258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60'),
-                    buildPictureCard(
-                        'https://images.unsplash.com/photo-1588713007734-b199ac8cb465?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8ZGF3bnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60'),
-                    buildPictureCard(
-                        'https://images.unsplash.com/photo-1503864664483-e8a499e2eb22?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80'),
-                    buildPictureCard(
-                        'https://images.unsplash.com/photo-1589441931743-900205c41d7e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80'),
-                    buildPictureCard(
-                        'https://images.unsplash.com/photo-1562555135-a9788949bc4b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=656&q=80'),
-                    buildPictureCard(
-                        'https://images.unsplash.com/photo-1583327375964-8f969ea45f59?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=892&q=80'),
-                    buildPictureCard(
-                        'https://images.unsplash.com/photo-1597848212624-a19eb35e2651?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3VuJTIwZmxvd2VyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60'),
-                    buildPictureCard(
-                        'https://images.unsplash.com/photo-1597848212624-a19eb35e2651?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3VuJTIwZmxvd2VyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60'),
-                  ],
-                ),
-              ),
+            GridView.count(
+              physics: NeverScrollableScrollPhysics(),
+              // to disable GridView's scrolling
+              shrinkWrap: true,
+              crossAxisCount: 2,
+              childAspectRatio: 4 / 6,
+              children: [
+                buildPictureCard(
+                    'https://images.unsplash.com/photo-1541397162856-74cedf47619c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGRhd258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60'),
+                buildPictureCard(
+                    'https://images.unsplash.com/photo-1588713007734-b199ac8cb465?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8ZGF3bnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60'),
+                buildPictureCard(
+                    'https://images.unsplash.com/photo-1503864664483-e8a499e2eb22?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80'),
+                buildPictureCard(
+                    'https://images.unsplash.com/photo-1589441931743-900205c41d7e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80'),
+                buildPictureCard(
+                    'https://images.unsplash.com/photo-1562555135-a9788949bc4b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=656&q=80'),
+                buildPictureCard(
+                    'https://images.unsplash.com/photo-1583327375964-8f969ea45f59?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=892&q=80'),
+                buildPictureCard(
+                    'https://images.unsplash.com/photo-1612195745262-89163d541059?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTh8fGRhd24lMjBsaWdodHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'),
+                buildPictureCard(
+                    'https://images.unsplash.com/photo-1595057083625-5e33c9372312?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGRhd24lMjBsaWdodHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'),
+
+              ],
             ),
+
+            // Row(
+            //   children: [
+            //     Expanded(
+            //       child: Image.network(
+            //           'https://images.unsplash.com/photo-1541397162856-74cedf47619c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGRhd258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60'),
+            //     ),
+            //     Expanded(
+            //       child: Image.network(
+            //           'https://images.unsplash.com/photo-1541397162856-74cedf47619c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGRhd258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60'),
+            //     ),
+            //   ],
+            // )
+
+            // Row(
+            //   children: [
+            //     Card(
+            //       child: buildPictureCard(
+            //         'https://images.unsplash.com/photo-1541397162856-74cedf47619c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGRhd258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60',
+            //       ),
+            //     ),
+            //     // buildPictureCard(
+            //     //   'https://images.unsplash.com/photo-1541397162856-74cedf47619c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGRhd258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60',
+            //     // ),
+            //   ],
+            // ),
+            // Text('gi')
           ],
         ),
       );
@@ -302,107 +377,14 @@ Card buildPictureCard(String url) {
         ),
     child: Container(
       decoration: BoxDecoration(
-          //borderRadius: BorderRadius.circular(30),
-          image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(
-                url,
-              ))),
+        //borderRadius: BorderRadius.circular(30),
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(
+            url,
+          ),
+        ),
+      ),
     ),
   );
-}
-
-class DataSearch extends SearchDelegate<String> {
-  final cities = [
-    "thienNgan7932",
-    "thanhnguyen",
-    "tienquyen",
-    "thuytrang9320",
-    "thanch_canh nguyen",
-    "Thien_baoquoc",
-    "Tienthanhmai",
-    "thaophan739_983",
-    "thinNgan7932",
-    "thinhnguyen",
-    "thienguyenhoaphan",
-    "thienly_09381",
-    "thanch_canh nguyen",
-    "Thien_baoquoc",
-    "Tienthanhmai",
-    "thaophan739_983",
-    "th_nguyenhuyen",
-  ];
-
-  final recentcities = [
-    "thanh_nguyen",
-    "Thienngan0392_",
-    "DonChung_ft",
-    "bachnguyenlephan",
-  ];
-
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    // TODO: implement buildActions
-    //actions for app bar
-    //throw UnimplementedError();
-    return [
-      Text('hi'),
-      IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            query = "";
-          })
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
-    //leading icon on the left of app bar
-    //throw UnimplementedError();
-    return IconButton(
-      icon: AnimatedIcon(
-        icon: AnimatedIcons.menu_arrow,
-        progress: transitionAnimation,
-      ),
-      onPressed: () {
-        close(context, null);
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    //show some result based on the selection
-    //throw UnimplementedError();
-    return Card(
-      color: Colors.red,
-      shape: StadiumBorder(),
-      child: Center(
-        child: Text(query),
-      ),
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
-    //show when some one searches fỏr some one
-    //throw UnimplementedError();
-    final suggestionList = query.isEmpty
-        ? recentcities
-        : cities.where((p) => p.startsWith(query)).toList();
-
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-        onTap: () {
-          showResults(context);
-        },
-        leading: Icon(Icons.access_time_rounded),
-        title: Text(suggestionList[index]),
-      ),
-      itemCount: suggestionList.length,
-    );
-  }
 }
