@@ -4,6 +4,10 @@ import 'package:flutter/rendering.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sharingvideoapp/repository/fake_repository.dart';
+import 'package:flutter/material.dart';
+import 'package:sharingvideoapp/screen/pages/discover_page.dart';
+import 'package:sharingvideoapp/screen/discover_screen.dart';
+
 
 class TrendingPage extends StatelessWidget {
   @override
@@ -12,21 +16,39 @@ class TrendingPage extends StatelessWidget {
       builder: (BuildContext context, SizingInformation sizingInformation) {
         return Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: true,
             actionsIconTheme: IconThemeData(color: Colors.black),
             backgroundColor: Colors.transparent,
             elevation: 0,
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                FontAwesomeIcons.arrowLeft,
+
+                size: 20.0,
+                color: Colors.black,
+              ),
+            ),
             actions: <Widget>[
+
+
               Padding(
                   padding: EdgeInsets.only(right: 20.0),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                    },
                     child: Icon(
                       FontAwesomeIcons.share,
-                      size: 26.0,
+                      size: 20.0,
                       color: Colors.black,
                     ),
                   )
               ),
+
+
+
             ],
           ),
           body: Container(
@@ -49,7 +71,7 @@ class TrendingPage extends StatelessWidget {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  '#TestNhanPham',
+                                  '#OurSmiles',
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -59,7 +81,7 @@ class TrendingPage extends StatelessWidget {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  '351.4M views',
+                                  '3.4M views',
                                   textAlign: TextAlign.start,
                                 ),
                               ),
@@ -74,7 +96,7 @@ class TrendingPage extends StatelessWidget {
                                     alignment:Alignment.bottomLeft,
                                     margin: const EdgeInsets.fromLTRB(0, 15, 15,15),
                                     padding: const EdgeInsets.all(3.0),
-                                    width: 130,
+                                    width: 140,
                                     height: 30,
                                     decoration: BoxDecoration(
                                       border: Border.all(
@@ -104,9 +126,43 @@ class TrendingPage extends StatelessWidget {
                      alignment: Alignment.topLeft,
                      child: Container(
                        margin: const EdgeInsets.fromLTRB(15, 15, 15,15),
-                       child: Text("Đây là mô tả"),
+                       child: Text("The testing can be done at system, integration and unit levels of software development. One of the basic goals of whitebox testing is to verify a working flow for an application."),
                      ),
                    ),
+                    GridView.count(
+                      physics: NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                      shrinkWrap: true,
+                      crossAxisCount: 3,
+                      childAspectRatio: 5 / 6,
+                      children: [
+                        buildPictureCard(
+                            'https://images.unsplash.com/photo-1541397162856-74cedf47619c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGRhd258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60'),
+                        buildPictureCard(
+                            'https://images.unsplash.com/photo-1588713007734-b199ac8cb465?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8ZGF3bnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60'),
+                        buildPictureCard(
+                            'https://images.unsplash.com/photo-1503864664483-e8a499e2eb22?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80'),
+                        buildPictureCard(
+                            'https://images.unsplash.com/photo-1589441931743-900205c41d7e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80'),
+                        buildPictureCard(
+                            'https://images.unsplash.com/photo-1562555135-a9788949bc4b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=656&q=80'),
+                        buildPictureCard(
+                            'https://images.unsplash.com/photo-1583327375964-8f969ea45f59?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=892&q=80'),
+                        buildPictureCard(
+                            'https://images.unsplash.com/photo-1612195745262-89163d541059?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTh8fGRhd24lMjBsaWdodHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'),
+                        buildPictureCard(
+                            'https://images.unsplash.com/photo-1595057083625-5e33c9372312?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGRhd24lMjBsaWdodHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'),
+                        buildPictureCard(
+                            'https://images.unsplash.com/photo-1562555135-a9788949bc4b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=656&q=80'),
+                        buildPictureCard(
+                            'https://images.unsplash.com/photo-1583327375964-8f969ea45f59?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=892&q=80'),
+                        buildPictureCard(
+                            'https://images.unsplash.com/photo-1612195745262-89163d541059?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTh8fGRhd24lMjBsaWdodHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'),
+                        buildPictureCard(
+                            'https://images.unsplash.com/photo-1595057083625-5e33c9372312?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGRhd24lMjBsaWdodHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'),
+
+                      ],
+                    ),
+
                    // ListView.builder(
                    //      itemCount: FakeRepository.assetData.length,
                    //      itemBuilder: (_, index) {

@@ -7,6 +7,7 @@ import 'package:marquee/marquee.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:video_player/video_player.dart';
 import 'package:sharingvideoapp/screen/discover_screen.dart';
+import 'package:sharingvideoapp/screen/pages/trending_page.dart';
 
 var ishit = false;
 
@@ -17,6 +18,7 @@ class DiscoverPage extends StatefulWidget {
 
 class _DiscoverPageState extends State<DiscoverPage> {
   final CommentController = TextEditingController();
+  FocusNode _focus = FocusNode();
 
   final recentcities = [
     "thanh_nguyen",
@@ -79,6 +81,20 @@ class _DiscoverPageState extends State<DiscoverPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _focus.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange() {
+    // debugPrint("Focus: "+_focus.hasFocus.toString());
+    if (_focus.hasFocus)
+      setState(() {
+        ishit = true;
+      });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ResponsiveBuilder(
       builder: (BuildContext context, SizingInformation sizingInformation) {
@@ -106,6 +122,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                             textInTextField = CommentController.text;
                           });
                         },
+                        focusNode: _focus,
                         controller: CommentController,
                         //suggestions: cities,
                         decoration: InputDecoration(
@@ -119,16 +136,15 @@ class _DiscoverPageState extends State<DiscoverPage> {
                               Icons.search,
                               color: Colors.black,
                             ),
-                            onPressed: () {
-                              setState(() {
-                                // if(ishit==false)
-                                //   Navigator.pop(context);
-
-                                ishit = !ishit;
-
-                                print('hiiiiiiiiiiii');
-                              });
-                            },
+                            // onPressed: () {
+                            //   setState(
+                            //     () {
+                            //       ishit = !ishit;
+                            //
+                            //       print('hiiiiiiiiiiii');
+                            //     },
+                            //   );
+                            // },
                           ),
                         ),
                       ),
@@ -171,13 +187,13 @@ class _DiscoverPageState extends State<DiscoverPage> {
                         _buildCarouselSlider(sizingInformation),
                         SizedBox(height: 15),
                         _buildTrendHeading(sizingInformation,
-                            title: "CricketFever",
+                            title: "OurSmiles",
                             range: "9.4m",
                             descrition: "Trending hashtag"),
                         SizedBox(
                           height: 10,
                         ),
-                        _buildListView(),
+                        _buildListView(1),
                         SizedBox(height: 20),
                         _buildTrendHeading(sizingInformation,
                             title: "SportLover",
@@ -186,7 +202,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                         SizedBox(
                           height: 10,
                         ),
-                        _buildListView(),
+                        _buildListView(2),
                         SizedBox(height: 20),
                         _buildTrendHeading(sizingInformation,
                             title: "OutFit",
@@ -195,7 +211,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                         SizedBox(
                           height: 10,
                         ),
-                        _buildListView(),
+                        _buildListView(3),
                         SizedBox(height: 20),
                       ],
                     ),
@@ -210,111 +226,153 @@ class _DiscoverPageState extends State<DiscoverPage> {
     );
   }
 
-  Container _buildListView() {
-    return Container(
-      height: 170,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: FakeRepository.assetData.length,
-          itemBuilder: (_, index) {
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 1),
-              child: Container(
-                child: Image.asset(FakeRepository.assetData[index]),
-              ),
-            );
-          }),
-    );
+  Container _buildListView(var number) {
+    if (number == 1)
+      return Container(
+        height: 175,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: FakeRepository.assetCriket.length,
+            itemBuilder: (_, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 1),
+                child: Container(
+                  child: Image.network(FakeRepository.assetCriket[index]),
+                ),
+              );
+            }),
+      );
+    else if (number == 2)
+      return Container(
+        height: 175,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: FakeRepository.assetDataSportLover.length,
+            itemBuilder: (_, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 1),
+                child: Container(
+                  child:
+                      Image.network(FakeRepository.assetDataSportLover[index]),
+                ),
+              );
+            }),
+      );
+    else
+      return Container(
+        height: 175,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: FakeRepository.assetDataOutFit.length,
+            itemBuilder: (_, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 1),
+                child: Container(
+                  child: Image.network(FakeRepository.assetDataOutFit[index]),
+                ),
+              );
+            }),
+      );
   }
 
   Container _buildTrendHeading(SizingInformation sizingInformation,
       {String title, String descrition, String range}) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Container(
-            width: 40,
-            height: 40,
-            alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            decoration: BoxDecoration(
-              border: Border.all(
-                  color: Color.fromARGB(100, 227, 225, 225), width: 1.4),
-              borderRadius: BorderRadius.all(
-                Radius.circular(50),
+      child: InkWell(
+        onTap: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TrendingPage(),
+            ),
+          );
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Container(
+                width: 40,
+                height: 40,
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: Color.fromARGB(100, 227, 225, 225), width: 1.4),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(50),
+                  ),
+                ),
+                child: Text(
+                  "#",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            child: Text(
-              "#",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 10),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: sizingInformation.localWidgetSize.width * 0.80,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(190, 0, 0, 0),
-                        ),
-                      ),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(100, 227, 225, 225),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(4),
+              Container(
+                margin: EdgeInsets.only(left: 10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: sizingInformation.localWidgetSize.width * 0.80,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            title,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(190, 0, 0, 0),
+                            ),
                           ),
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              range,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(190, 0, 0, 0),
+                          Container(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(100, 227, 225, 225),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(4),
                               ),
                             ),
-                           Icon(
-                                Icons.navigate_next,
-                                color: Colors.black,
-                             size: 17,
+                            child: Row(
+                              children: [
+                                Text(
+                                  range,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(190, 0, 0, 0),
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.navigate_next,
+                                  color: Colors.black,
+                                  size: 17,
+                                ),
 
-                              ),
-
-
-                            // Icon()
-                          ],
-                        ),
+                                // Icon()
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Text(
+                      descrition,
+                      style: TextStyle(
+                        //fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(100, 89, 89, 89),
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  descrition,
-                  style: TextStyle(
-                    //fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(100, 89, 89, 89),
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
