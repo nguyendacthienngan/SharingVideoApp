@@ -35,6 +35,7 @@ dependencies:
   path:
   path_provider:
   video_thumbnail: ^0.3.3
+  favorite_button: ^0.0.3
 
   responsive_builder: ^0.2.0+2
   font_awesome_flutter: ^8.8.1

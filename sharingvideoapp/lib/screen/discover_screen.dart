@@ -120,7 +120,7 @@ class _SearchState extends State<Search> {
           title: Row(
             children: [
               Container(
-                width: 330,
+                width: 330, //<====== CHỖ NÀY
                 decoration: BoxDecoration(
                   color: Color.fromARGB(100, 189, 189, 189),
                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -175,7 +175,7 @@ class _SearchState extends State<Search> {
                   'Cancel',
                   style: TextStyle(
                     fontSize: 13,
-                    color: Colors.black54,
+                    color: Colors.redAccent,
                   ),
                 ),
               ),
