@@ -106,7 +106,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
               children: [
                 Container(
                   // color: Colors.white70,
-                  width: ishit == false ? 369 : 325,
+                  width: ishit == false ? 369 : 325,//<=========
                   decoration: BoxDecoration(
                     color: Color.fromARGB(100, 189, 189, 189),
                     // color: Colors.white30,
@@ -165,7 +165,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                           'Cancel',
                           style: TextStyle(
                             fontSize: 13,
-                            color: Colors.black54,
+                            color: Colors.red,
                           ),
                         ),
                       )
